@@ -1,0 +1,23 @@
+{
+  "name": "js-dispatcher",
+  "version": "1.0.0",
+  "description": "Command Dispatcher",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/briandamaged/js-dispatcher.git"
+  },
+  "keywords": [
+    "Dispatcher",
+    "Function"
+  ],
+  "author": "Brian Lauber",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/briandamaged/js-dispatcher/issues"
+  },
+  "homepage": "https://github.com/briandamaged/js-dispatcher#readme"
+}
