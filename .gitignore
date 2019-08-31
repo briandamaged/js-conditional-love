@@ -1,0 +1,7 @@
+
+# Node stuffs
+node_modules
+
+# Ignoring this since it's a reusable package (not an app)
+package-lock.json
+
