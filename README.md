@@ -6,7 +6,7 @@ Flexible Conditional Logic
 
 ### The Basics ###
 
-First, here's an example of a programmatically constructed `if... else if... else` statement:
+Here's an example of a programmatically constructed `if... else if... else` statement:
 
 ```javascript
 const {
@@ -35,4 +35,36 @@ Notice that `d.otherwise((x, y)=> 0)` always just returns the value `0`.  Since 
 d.otherwise(RETURN(0));
 ```
 
+### Advanced Stuff ###
+
+The `IF(condition, handler)` function is just a factory for producing a very common type of `RULE_FUNCTION`.  Specifically, the `RULE_FUNCTION` has the form:
+
+```javascript
+function _if(...args) {
+  if(condition(...args)) {
+    return handler;
+  }
+}
+```
+
+As you can see, it evaluates the `condition(..)`.  If this condition returns something truthy, then it returns the associated `handler(..)` function.  Otherwise, it returns `undefined`.  This protocol informs the `Dispatcher` about whether or not the `RULE_FUNCTION` is able to handle the input.
+
+Most of the time, you don't need to worry about this level of detail, and you can just rely upon the `IF(..)` factory.  But, on rare occassions, both the `RULE_FUNCTION` and the `handler(..)` function rely upon the same computationally-expensive operation.  In these cases, you can write your own `RULE_FUNCTION` by hand to minimize computational costs.  For example:
+
+```javascript
+function customRule(...args) {
+  const expensive = someExpensiveCalculation(...args);
+
+  if(someCondition(expensive)) {
+    function handler() {
+      return doSomethingWith(expensive);
+    }
+
+    return handler;
+  }
+}
+
+
+d.use(customRule);
+```
 
