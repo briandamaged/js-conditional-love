@@ -1,5 +1,5 @@
 {
-  "name": "js-dispatcher",
+  "name": "@briandamaged/dispatcher",
   "version": "1.0.0",
   "description": "Command Dispatcher",
   "main": "src/index.js",
