@@ -1,7 +1,7 @@
 {
-  "name": "@briandamaged/dispatcher",
+  "name": "conditional-love",
   "version": "1.0.0",
-  "description": "Command Dispatcher",
+  "description": "Programmatically construct conditional expressions",
   "main": "src/index.js",
   "scripts": {
     "test": "mocha --recursive ./tests/unit"

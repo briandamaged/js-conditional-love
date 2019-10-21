@@ -1,6 +1,6 @@
-# js-dispatcher #
+# conditional-love #
 
-Flexible Conditional Logic
+Programmatically construct conditional expressions
 
 ## Usage ##
 
