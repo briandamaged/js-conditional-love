@@ -23,7 +23,7 @@ export function Dispatcher() {
   }
 
   dispatch.rules = [];
-  dispatch.onMatchFailure = M.DO_NOTHING;
+  dispatch.onMatchFailure = DO_NOTHING;
 
   dispatch.use = function(rule) {
     dispatch.rules.push(rule);
