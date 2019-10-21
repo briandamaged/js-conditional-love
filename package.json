@@ -21,6 +21,9 @@
   },
   "homepage": "https://github.com/briandamaged/js-dispatcher#readme",
   "devDependencies": {
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
     "chai": "^4.2.0",
     "mocha": "^6.2.0"
   }
