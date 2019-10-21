@@ -2,11 +2,15 @@
   "name": "conditional-love",
   "version": "1.0.0",
   "description": "Programmatically construct conditional expressions",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "build": "babel ./src -d lib",
+    "prepare": "npm run test && npm run build",
     "test": "mocha -r @babel/register --recursive ./tests/unit"
   },
+  "files": [
+    "/lib"
+  ],
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/briandamaged/js-dispatcher.git"
