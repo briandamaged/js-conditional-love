@@ -4,6 +4,7 @@
   "description": "Programmatically construct conditional expressions",
   "main": "src/index.js",
   "scripts": {
+    "build": "babel ./src -d lib",
     "test": "mocha --recursive ./tests/unit"
   },
   "repository": {

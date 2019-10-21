@@ -5,3 +5,6 @@ node_modules
 # Ignoring this since it's a reusable package (not an app)
 package-lock.json
 
+# Build stuffs
+/lib
+
