@@ -11,8 +11,10 @@
     "postversion": "git push && git push --tags",
     "test": "mocha -r @babel/register -r ts-node/register --recursive ./tests/unit"
   },
+  "typings": "./typings/index.d.ts",
   "files": [
-    "/lib"
+    "/lib",
+    "/typings"
   ],
   "repository": {
     "type": "git",
