@@ -74,3 +74,48 @@ export function DO_NOTHING() {
 export function THROW_ERROR(): never {
   throw new Error("Unhandled arguments");
 }
+
+
+
+
+
+export function AND<ARGS extends any[]>(expressions: Conditional<ARGS>[]): Conditional<ARGS> {
+  function _and(this: any, ...args: ARGS): boolean {
+    for(const expr of expressions) {
+      if(!expr.apply(this, args)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  return _and;
+}
+
+
+export function OR<ARGS extends any[]>(expressions: Conditional<ARGS>[]): Conditional<ARGS> {
+  function _or(this: any, ...args: ARGS): boolean {
+    for(const expr of expressions) {
+      if(expr.apply(this, args)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  return _or;
+}
+
+export function NOT<ARGS extends any[]>(expr: Conditional<ARGS>): Conditional<ARGS> {
+  function _not(this: any, ...args: ARGS): boolean {
+    return !expr.apply(this, args);
+  }
+
+  return _not;
+}
+
+
+
+
