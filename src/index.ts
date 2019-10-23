@@ -11,7 +11,7 @@ export interface Handler<INPUT extends any[], OUTPUT> {
 }
 
 export interface Rule<INPUT extends any[], OUTPUT> {
-  (...args: INPUT): Handler<INPUT, OUTPUT>,
+  (...args: INPUT): (Handler<INPUT, OUTPUT> | undefined),
 }
 
 export interface DispatcherInstance<INPUT extends any[], OUTPUT> {
@@ -72,7 +72,7 @@ export function Dispatcher<INPUT extends any[], OUTPUT>(): DispatcherInstance<IN
 }
 
 
-export function IF<INPUT extends any[], OUTPUT>(condition: Conditional<INPUT>, handler: Handler<INPUT, OUTPUT>) {
+export function IF<INPUT extends any[], OUTPUT>(condition: Conditional<INPUT>, handler: Handler<INPUT, OUTPUT>): Rule<INPUT, OUTPUT> {
   function _if(...args: INPUT) {
     if(condition(...args)) {
       return handler;
