@@ -7,6 +7,7 @@ const {
   Dispatcher,
   IF,
   RETURN,
+  AND, OR, NOT,
 } = require('../../src/');
 
 
@@ -140,3 +141,80 @@ describe('Dispatcher', function() {
 });
 
 
+
+describe('NOT', function() {
+  beforeEach(function() {
+    this.c = NOT((x, y)=> x < y);
+  });
+
+  context('nested Conditional returns something truthy', function() {
+    it('returns false', function() {
+      expect(this.c(-10, 10)).to.equal(false);
+      expect(this.c(0, 5)).to.equal(false);
+    });
+  });
+
+  context('nested Conditional returns something falsey', function() {
+    it('returns true', function() {
+      expect(this.c(0, 0)).to.equal(true);
+      expect(this.c(10, -10)).to.equal(true);
+    });
+  });
+});
+
+
+describe('AND', function() {
+  beforeEach(function() {
+    this.c = AND([
+      (x, y)=> x < y,
+      (x, y)=> x > -10,
+      (x, y)=> y < 10,
+    ]);
+  });
+
+  context('all nested Conditionals return something truthy', function() {
+    it('returns true', function() {
+      expect(this.c(2, 4)).to.equal(true);
+      expect(this.c(-5, 8)).to.equal(true);
+    });
+  });
+
+
+  context('one or more of the nested Conditionals return something falsey', function() {
+    it('returns false', function() {
+      expect(this.c(4, 2)).to.equal(false);
+      expect(this.c(-50, 8)).to.equal(false);
+      expect(this.c(0, 80)).to.equal(false);
+
+      expect(this.c(-20, 30)).to.equal(false);
+    });
+  });
+
+});
+
+
+describe('OR', function() {
+  beforeEach(function() {
+    this.c = OR([
+      (x, y)=> x < y,
+      (x, y)=> x > -10,
+      (x, y)=> y < 10,
+    ]);
+  });
+
+  context('at least one nested Conditional returns something truthy', function() {
+    it('returns true', function() {
+      expect(this.c(-20, 40)).to.equal(true);
+      expect(this.c(0, 800)).to.equal(true);
+      expect(this.c(-50, 8)).to.equal(true);
+    });
+  });
+
+
+  context('none of the nested Conditionals return something truthy', function() {
+    it('returns false', function() {
+      expect(this.c(NaN, NaN)).to.equal(false);
+    });
+  });
+
+});
