@@ -1,22 +1,22 @@
 
-const sinon = require('sinon');
-const {expect} = require('chai');
+import * as sinon from 'sinon';
+import {expect} from 'chai';
 
-const {
+import {
   UnhandledArgumentsError,
   Dispatcher,
   IF,
   RETURN,
   AND, OR, NOT,
-} = require('../../src/');
+} from '../../src/';
 
 
 
 describe('IF', function() {
   const scenarios = [
     {
-      condition: (x, y)=> x < y,
-      handler: Math.random(),
+      condition: (x: number, y: number)=> x < y,
+      handler: (x: number, y: number)=> Math.random(),
       cases: [
         {
           x: 2,
@@ -41,8 +41,8 @@ describe('IF', function() {
       ]
     },
     {
-      condition: (x, y)=> (x > 3 && y > 3),
-      handler: Math.random(),
+      condition: (x: number, y: number)=> (x > 3 && y > 3),
+      handler: (x: number, y: number)=> Math.random(),
       cases: [
         {
           x: 2,
@@ -102,7 +102,7 @@ describe('RETURN', function() {
 describe('Dispatcher', function() {
 
   it('works', function() {
-    const d = Dispatcher();
+    const d = Dispatcher<[number, number], number>();
 
     d.use(IF((x, y)=> x < y, (x, y)=> x + y));
     d.use(IF((x, y)=> x > y, (x, y)=> x * y));
