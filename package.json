@@ -9,7 +9,7 @@
     "prepare": "npm run test && npm run build",
     "preversion": "npm run test",
     "postversion": "git push && git push --tags",
-    "test": "mocha -r @babel/register -r ts-node/register --recursive ./tests/unit"
+    "test": "mocha -r @babel/register -r ts-node/register -r ./tests/setup --recursive ./tests/unit"
   },
   "typings": "./typings/index.d.ts",
   "files": [
@@ -38,7 +38,12 @@
     "@babel/register": "^7.6.2",
     "chai": "^4.2.0",
     "mocha": "^6.2.0",
+    "sinon": "^7.5.0",
+    "sinon-chai": "^3.3.0",
     "ts-node": "^8.4.1",
     "typescript": "^3.6.4"
+  },
+  "dependencies": {
+    "es6-error": "^4.1.1"
   }
 }

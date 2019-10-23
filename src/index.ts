@@ -1,10 +1,19 @@
 
+import ES6Error from 'es6-error';
+
 import {
   Conditional,
   DispatcherInstance,
   Rule,
   Handler,
 } from '../typings/index';
+
+
+
+export class UnhandledArgumentsError extends ES6Error {
+  // No custom behavior necessary
+}
+
 
 /**
  * A factory for creating "Command Dispatchers".  The general
@@ -30,7 +39,7 @@ export function Dispatcher<INPUT extends any[], OUTPUT>(): DispatcherInstance<IN
   }
 
   dispatch.rules = [];
-  dispatch.onMatchFailure = THROW_ERROR;
+  dispatch.onMatchFailure = THROW_UNHANDLED_ARGUMENTS_ERROR;
 
   dispatch.use = function(rule) {
     dispatch.rules.push(rule);
@@ -71,8 +80,9 @@ export function DO_NOTHING() {
   // Works as exactly advertised!
 }
 
-export function THROW_ERROR(): never {
-  throw new Error("Unhandled arguments");
+
+export function THROW_UNHANDLED_ARGUMENTS_ERROR(): never {
+  throw new UnhandledArgumentsError("Unhandled arguments");
 }
 
 

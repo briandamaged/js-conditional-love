@@ -1,7 +1,9 @@
 
+const sinon = require('sinon');
 const {expect} = require('chai');
 
 const {
+  UnhandledArgumentsError,
   Dispatcher,
   IF,
   RETURN,
@@ -111,4 +113,30 @@ describe('Dispatcher', function() {
     expect(d(10, 5)).to.equal(50);
     expect(d(10, 10)).to.equal(0);
   });
+
+  context('None of the rules handle the given arguments', function() {
+    context('A default handler was NOT specified via d.otherwise(..)', function() {
+      it('throws an UnhandledArgumentsError', function() {
+        const d = Dispatcher();
+
+        expect(()=> d(1, 2, 3)).to.throw(UnhandledArgumentsError);
+      });
+    });
+
+    context('A default handler was specified via d.otherwise(..)', function() {
+      it('invokes the default Handler', function() {
+        const d = Dispatcher();
+        const h = sinon.stub().callsFake((x, y)=> x + y);
+
+        d.otherwise(h);
+
+        const result = d(3, 5);
+
+        expect(h).to.have.been.calledWith(3, 5);
+        expect(result).to.equal(8);
+      });
+    });
+  });
 });
+
+
