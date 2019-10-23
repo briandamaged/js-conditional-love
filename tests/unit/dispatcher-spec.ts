@@ -144,7 +144,7 @@ describe('Dispatcher', function() {
 
 describe('NOT', function() {
   beforeEach(function() {
-    this.c = NOT((x, y)=> x < y);
+    this.c = NOT<[number, number]>((x, y)=> x < y);
   });
 
   context('nested Conditional returns something truthy', function() {
@@ -165,7 +165,7 @@ describe('NOT', function() {
 
 describe('AND', function() {
   beforeEach(function() {
-    this.c = AND([
+    this.c = AND<[number, number]>([
       (x, y)=> x < y,
       (x, y)=> x > -10,
       (x, y)=> y < 10,
@@ -195,7 +195,7 @@ describe('AND', function() {
 
 describe('OR', function() {
   beforeEach(function() {
-    this.c = OR([
+    this.c = OR<[number, number]>([
       (x, y)=> x < y,
       (x, y)=> x > -10,
       (x, y)=> y < 10,
