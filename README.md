@@ -10,15 +10,15 @@ npm install conditional-love
 
 ## Usage ##
 
-### The Basics ###
+### Basic Dispatcher Stuffs ###
 
 Here's an example of a programmatically constructed `if... else if... else` statement:
 
 ```typescript
-const {
+import {
   Dispatcher,
   IF, RETURN,
-} = require('js-dispatcher');
+} from 'conditional-love';
 
 // This Dispatcher accepts 2 numbers as inputs and
 // returns a number as an output.
@@ -46,7 +46,7 @@ Returning a default value is a very common pattern.  Therefore, you can also spe
 d.otherwise(RETURN(0));
 ```
 
-### Advanced Stuff ###
+### Advanced Dispatcher Stuffs ###
 
 The `IF(condition, handler)` function is just a factory for producing a very common type of `RULE_FUNCTION`.  Specifically, the `RULE_FUNCTION` has the form:
 
@@ -79,3 +79,79 @@ function customRule(...args) {
 d.use(customRule);
 ```
 
+## Predicate Function Stuffs ##
+
+It's pretty common to find ourselves writing code such as the following:
+
+```typescript
+function hasLatitude(x) {
+  return typeof(x.latitude) === 'number';
+}
+
+function hasLongitude(x) {
+  return typeof(x.longitude) === 'number';
+}
+
+function isGeo(x) {
+  return hasLatitude(x) && hasLongitude(x);
+}
+```
+
+This is fine, but the definition of the `isGeo(..)` function is somewhat imperative.  We can express it in a more declarative fashion as follows:
+
+```typescript
+import {AND} from 'conditional-love';
+
+function hasLatitude(x) {
+  return typeof(x.latitude) === 'number';
+}
+
+function hasLongitude(x) {
+  return typeof(x.longitude) === 'number';
+}
+
+const isGeo = AND([
+  hasLatitude,
+  hasLongitude,
+]);
+```
+
+Likewise, `conditional-love` also provides `OR(..)` and `NOT(..)` functions as well.  So, this allows you to construct expressions such as:
+
+```typescript
+import {
+  AND, OR, NOT,
+} from 'conditional-love';
+
+// A Location can be either a Geo or a non-empty String
+const isLocation = OR([
+  isGeo,
+  AND([
+    isString,
+    NOT(isEmpty),
+  ])
+]);
+```
+
+These functions are useful when you are trying to build your own domain-specific language.  For instance, let's say we want to implement a pattern matcher for domain names.  You could then do something like this:
+
+```typescript
+// Hard-coded example.  In practice, you would actually use this
+// DSL to construct domain pattern matchers programmatically.
+const isAcceptableDomain = OR([
+  Exactly("foo.com"),
+  AND([
+    SubdomainOf("foo.com"),
+    NOT(
+      Exactly("invalid.foo.com")
+    ),
+  ])
+]);
+
+
+// Test the function we produced via our domain-specific language
+isAcceptableDomain("foo.com");              // true
+isAcceptableDomain("bar.foo.com");          // true
+isAcceptableDomain("invalid.foo.com");      // false
+isAcceptableDomain("not.invalid.foo.com");  // true
+```
