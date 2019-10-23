@@ -1,10 +1,10 @@
 
-export interface Condition<INPUT extends any[]> {
+export interface Conditional<INPUT extends any[]> {
   (...args: INPUT): boolean,
 }
 
 export interface Handler<INPUT extends any[], OUTPUT> {
-  (...args: INPUT): OUTPUT | undefined,
+  (...args: INPUT): OUTPUT,
 }
 
 export interface Rule<INPUT extends any[], OUTPUT> {
@@ -12,7 +12,7 @@ export interface Rule<INPUT extends any[], OUTPUT> {
 }
 
 export interface DispatcherInstance<INPUT extends any[], OUTPUT> {
-  (...args: INPUT): OUTPUT | undefined,
+  (...args: INPUT): OUTPUT,
 
   rules: Rule<INPUT, OUTPUT>[],
   onMatchFailure: Handler<INPUT, OUTPUT>,

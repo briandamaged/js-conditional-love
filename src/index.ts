@@ -1,6 +1,6 @@
 
 import {
-  Condition,
+  Conditional,
   DispatcherInstance,
   Rule,
   Handler,
@@ -30,7 +30,7 @@ export function Dispatcher<INPUT extends any[], OUTPUT>(): DispatcherInstance<IN
   }
 
   dispatch.rules = [];
-  dispatch.onMatchFailure = DO_NOTHING;
+  dispatch.onMatchFailure = THROW_ERROR;
 
   dispatch.use = function(rule) {
     dispatch.rules.push(rule);
@@ -47,7 +47,7 @@ export function Dispatcher<INPUT extends any[], OUTPUT>(): DispatcherInstance<IN
 }
 
 
-export function IF<INPUT extends any[], OUTPUT>(condition: Condition<INPUT>, handler: Handler<INPUT, OUTPUT>) {
+export function IF<INPUT extends any[], OUTPUT>(condition: Conditional<INPUT>, handler: Handler<INPUT, OUTPUT>) {
   function _if(...args: INPUT) {
     if(condition(...args)) {
       return handler;
@@ -69,7 +69,8 @@ export function RETURN<OUTPUT>(value: OUTPUT) {
 
 export function DO_NOTHING() {
   // Works as exactly advertised!
-  return undefined;
 }
 
-
+export function THROW_ERROR(): never {
+  throw new Error("Unhandled arguments");
+}
