@@ -43,11 +43,11 @@ export class UnhandledArgumentsError extends ES6Error {
  */
 export function Dispatcher<INPUT extends any[], OUTPUT>(): DispatcherInstance<INPUT, OUTPUT> {
 
-  const dispatch: DispatcherInstance<INPUT, OUTPUT> = function _dispatch(...args: INPUT) {
+  const dispatch: DispatcherInstance<INPUT, OUTPUT> = function _dispatch(this: any, ...args: INPUT): OUTPUT {
     for(const r of dispatch.rules) {
-      const h = r(...args);
+      const h = r.apply(this, args);
       if(h) {
-        return h(...args);
+        return h.apply(this, args);
       }
     }
 
