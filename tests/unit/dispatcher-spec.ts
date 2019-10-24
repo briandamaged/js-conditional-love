@@ -7,6 +7,7 @@ import {
   Dispatcher,
   IF,
   RETURN,
+  DO_NOTHING,
   AND, OR, NOT,
 } from '../../src/';
 
@@ -113,6 +114,43 @@ describe('Dispatcher', function() {
     expect(d(5, 10)).to.equal(15);
     expect(d(10, 5)).to.equal(50);
     expect(d(10, 10)).to.equal(0);
+  });
+
+  it("Retains `this` when invoking rules", function() {
+    const foo: any = {
+      bar: Dispatcher<[string], number>(),
+      x: 3,
+      y: 5,
+    };
+
+    foo.bar.use(function(this: any, input: string) {
+      this.z = ((input.length) + this.x) * this.y
+    });
+
+    foo.bar.otherwise(DO_NOTHING);
+
+    foo.bar("hello");
+
+    expect(foo.z).to.equal(40);
+
+  });
+
+
+  it("Retains `this` when invoking handlers", function() {
+    const foo: any = {
+      bar: Dispatcher<[string], number>(),
+      x: 3,
+      y: 5,
+    };
+
+    foo.bar.use(function(input: string) {
+      return function(this: any, input: string) {
+        return ((input.length) + this.x) * this.y;
+      }
+    });
+
+    expect(foo.bar("still works")).to.equal(70);
+
   });
 
   context('None of the rules handle the given arguments', function() {

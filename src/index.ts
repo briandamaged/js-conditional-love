@@ -11,7 +11,7 @@ export interface Handler<INPUT extends any[], OUTPUT> {
 }
 
 export interface Rule<INPUT extends any[], OUTPUT> {
-  (...args: INPUT): (Handler<INPUT, OUTPUT> | undefined),
+  (...args: INPUT): (Handler<INPUT, OUTPUT> | undefined | void),
 }
 
 export interface DispatcherInstance<INPUT extends any[], OUTPUT> {
