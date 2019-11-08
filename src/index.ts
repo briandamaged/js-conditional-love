@@ -1,6 +1,12 @@
 
 import ES6Error from 'es6-error';
 
+export {
+  Resolver,
+  ResolverResolver,
+  CompositeResolver,
+  DepthFirstResolver,
+} from './resolver';
 
 export interface Conditional<INPUT extends any[]> {
   (...args: INPUT): boolean,
