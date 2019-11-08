@@ -1,0 +1,14 @@
+FROM node:12
+WORKDIR /usr/src/app
+
+RUN chown -R node: /usr/src && \
+    apt update && \
+    apt install -y \
+      vim less && \
+    rm -rf /var/lib/apt/lists/*
+
+USER node
+VOLUME ["/usr/src/app"]
+EXPOSE 3000
+
+CMD npm install && npm run watch
