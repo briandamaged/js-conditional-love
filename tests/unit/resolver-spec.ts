@@ -3,6 +3,7 @@ import {expect} from 'chai';
 
 import {
   DepthFirstResolver,
+  depthFirst, breadthFirst,
 } from '../../src/resolver';
 import { Resolver } from 'dns';
 
@@ -75,3 +76,35 @@ describe('DepthFirstResolver', function() {
     expect(Array.from(resolve(NaN))).to.deep.equal([]);
   });
 });
+
+
+
+describe('Iteration Strategies', function() {
+  beforeEach(function() {
+    this.input = [
+      [1, 2, 3],
+      [4, 5, 6],
+      [7, 8, 9],
+    ];
+  });
+
+  describe('depthFirst', function() {
+    it('iterates in the correct order', function() {
+      const result = Array.from(depthFirst(this.input));
+      expect(result).to.deep.equal([
+        1, 2, 3, 4, 5, 6, 7, 8, 9,
+      ]);
+    });
+  });
+
+
+  describe('breadthFirst', function() {
+    it('iterates in the correct order', function() {
+      const result = Array.from(breadthFirst(this.input));
+      expect(result).to.deep.equal([
+        1, 4, 7, 2, 5, 8, 3, 6, 9,
+      ]);
+    });
+  });
+});
+
