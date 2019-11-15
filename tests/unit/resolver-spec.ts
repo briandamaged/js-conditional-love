@@ -82,9 +82,9 @@ describe('DepthFirstResolver', function() {
 describe('Iteration Strategies', function() {
   beforeEach(function() {
     this.input = [
-      [1, 2, 3],
-      [4, 5, 6],
-      [7, 8, 9],
+      [1,  2,  3],
+      [4,  5,  6,  7],
+      [8,  9,  10, 11, 12],
     ];
   });
 
@@ -92,17 +92,16 @@ describe('Iteration Strategies', function() {
     it('iterates in the correct order', function() {
       const result = Array.from(depthFirst(this.input));
       expect(result).to.deep.equal([
-        1, 2, 3, 4, 5, 6, 7, 8, 9,
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
       ]);
     });
   });
-
 
   describe('breadthFirst', function() {
     it('iterates in the correct order', function() {
       const result = Array.from(breadthFirst(this.input));
       expect(result).to.deep.equal([
-        1, 4, 7, 2, 5, 8, 3, 6, 9,
+        1, 4, 8, 2, 5, 9, 3, 6, 10, 7, 11, 12
       ]);
     });
   });
